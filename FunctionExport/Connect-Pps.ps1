@@ -1,8 +1,31 @@
 function Connect-Pps
 {
     <#
+        .SYNOPSIS
+            Connect to Pleasant Password Server
 
+        .DESCRIPTION
+            Connect to Pleasant Password Server
+
+        .PARAMETER Uri
+            URI of server to connect to, eg. https://password.company.tld:10001
+
+        .PARAMETER Credential
+            Credential object with username and password used to connect to Pleasant Password Server with
+
+        .PARAMETER Username
+            Username used to connect to Pleasant Password Server with
+
+        .PARAMETER Password
+            Password used to connect to Pleasant Password Server with
+
+        .PARAMETER Session
+            Makes it possible to connect to multiple Pleasant Password Servers
+
+        .EXAMPLE
+            Connect-Pps -Uri https://password.company.tld:10001
     #>
+
     [CmdletBinding(DefaultParameterSetName='Default')]
     param
     (

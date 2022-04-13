@@ -1,8 +1,22 @@
 function Update-PpsEntry
 {
     <#
+        .SYNOPSIS
+            Update existing credential entry in Pleasant Password Server
 
+        .DESCRIPTION
+            Update existing credential entry in Pleasant Password Server
+
+        .PARAMETER Entry
+            Object with updated info
+
+        .PARAMETER Session
+            Makes it possible to connect to multiple Pleasant Password Servers
+
+        .EXAMPLE
+            $e=Get-PpsEntry -Id c079a48c-a465-4605-9477-2b4baa743e6f; $e.Username='user'; $e|Update-PpsEntry
     #>
+
     [CmdletBinding()]
     param
     (

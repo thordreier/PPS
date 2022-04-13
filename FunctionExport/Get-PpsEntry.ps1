@@ -1,8 +1,22 @@
 function Get-PpsEntry
 {
     <#
+        .SYNOPSIS
+            Get credential entry from Pleasant Password Server
 
+        .DESCRIPTION
+            Get credential entry from Pleasant Password Server
+
+        .PARAMETER Id
+            ID of entry to get info about
+
+        .PARAMETER Session
+            Makes it possible to connect to multiple Pleasant Password Servers
+
+        .EXAMPLE
+            Get-PpsEntry -Id 5cbfabe7-70ee-4041-a1e0-263c9170f650
     #>
+
     [CmdletBinding()]
     param
     (

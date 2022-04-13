@@ -22,7 +22,7 @@ CompanyName = 'Thor Dreier'
 Copyright = 'MIT License'
 
 # Description of the functionality provided by this module
-Description = 'Pleasant Password Server module'
+Description = 'Interact with Pleasant Password Server API'
 
 # Minimum version of the Windows PowerShell engine required by this module
 # PowerShellVersion = ''

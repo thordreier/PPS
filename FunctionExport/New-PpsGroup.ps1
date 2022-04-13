@@ -1,8 +1,28 @@
 function New-PpsGroup
 {
     <#
+        .SYNOPSIS
+            Create new credential group (folder) from Pleasant Password Server
 
+        .DESCRIPTION
+            Create new credential group (folder) from Pleasant Password Server
+
+        .PARAMETER Group
+            Object contining group info
+
+        .PARAMETER ParentId
+            ID of parent group
+
+        .PARAMETER Name
+            Name of the new group (folder)
+
+        .PARAMETER Session
+            Makes it possible to connect to multiple Pleasant Password Servers
+
+        .EXAMPLE
+            New-PpsGroup -ParentId f6190167-a9a1-4386-a8cd-ae46008c9188 -Name "New Password Group"
     #>
+
     [CmdletBinding()]
     param
     (

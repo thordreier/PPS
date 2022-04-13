@@ -1,6 +1,6 @@
-# Xxx
+# PPS
 
-PowerShell functions for xxxxxxxxxx.
+PowerShell module: Interact with Pleasant Password Server API.
 
 ## Usage
 
@@ -22,14 +22,14 @@ See [FUNCTIONS.md](FUNCTIONS.md) for documentation of functions in this module.
 ### Install module from PowerShell Gallery
 
 ```powershell
-Install-Module Xxx
+Install-Module PPS
 ```
 
 ### Install module from source
 
 ```powershell
-git clone https://github.com/thordreier/Xxx.git
-cd Xxx
+git clone https://github.com/thordreier/PPS.git
+cd PPS
 git pull
 .\Build.ps1 -InstallModule
 ```

@@ -1,8 +1,28 @@
 function Invoke-PpsApiRequest
 {
     <#
+        .SYNOPSIS
+            Invoke API request against Pleasant Password Server
 
+        .DESCRIPTION
+            Invoke API request against Pleasant Password Server
+
+        .PARAMETER Uri
+            xxx
+
+        .PARAMETER Method
+            xxx
+
+        .PARAMETER Data
+            xxx
+
+        .PARAMETER Session
+            Makes it possible to connect to multiple Pleasant Password Servers
+
+        .EXAMPLE
+            xxx
     #>
+
     [CmdletBinding()]
     param
     (
@@ -17,10 +37,6 @@ function Invoke-PpsApiRequest
         [Parameter()]
         [object]
         $Data,
-
-        [Parameter()]
-        [switch]
-        $Return,
 
         [Parameter()]
         [string]

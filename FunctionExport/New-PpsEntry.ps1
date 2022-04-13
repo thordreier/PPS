@@ -1,8 +1,43 @@
 function New-PpsEntry
 {
     <#
+        .SYNOPSIS
+            Create new credential entry in Pleasant Password Server
 
+        .DESCRIPTION
+            Create new credential entry in Pleasant Password Server
+
+        .PARAMETER Entry
+            Object with data to create in Pleasant Password Server
+
+        .PARAMETER GroupId
+            ID of credential group to create credential entry in
+
+        .PARAMETER Name
+            Name of credential in Pleasant Password Server
+
+        .PARAMETER Username
+            Username of credential in Pleasant Password Server
+
+        .PARAMETER Password
+            Password of credential in Pleasant Password Server
+
+        .PARAMETER Url
+            Url of credential in Pleasant Password Server
+
+        .PARAMETER Notes
+            Notes of credential in Pleasant Password Server
+
+        .PARAMETER Session
+            Makes it possible to connect to multiple Pleasant Password Servers
+
+        .EXAMPLE
+            New-PpsEntry -GroupId f6190167-a9a1-4386-a8cd-ae46008c9188 -Name name -Username uname -Password pw -Url http://abc -Notes "This i a note"
+
+        .EXAMPLE
+            @{GroupId='f6190167-a9a1-4386-a8cd-ae46008c9188'; Name='name'; Username='user'; Password='pw'} | New-PpsEntry
     #>
+
     [CmdletBinding()]
     param
     (
