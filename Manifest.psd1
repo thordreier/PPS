@@ -4,7 +4,7 @@
 RootModule = 'PPS.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.1'
+ModuleVersion = '0.2'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -43,7 +43,7 @@ Description = 'Interact with Pleasant Password Server API'
 # ProcessorArchitecture = ''
 
 # Modules that must be imported into the global environment prior to importing this module
-# RequiredModules = @()
+RequiredModules = @('OAuth2PS')
 
 # Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()
