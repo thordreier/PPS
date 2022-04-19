@@ -12,42 +12,7 @@ Connect-Pps -Uri https://password.company.tld:10001
 
 # Get ID of private folder
 $allGroups = Get-PpsGroup
-$privateId = $allGroups.Children.Where({# PPS
-
-PowerShell module: Interact with Pleasant Password Server API.
-
-## Usage
-
-### Examples
-
-```powershell
-# Write example here
-
-```
-
-Examples are also found in [EXAMPLES.ps1](EXAMPLES.ps1).
-
-### Functions
-
-See [FUNCTIONS.md](FUNCTIONS.md) for documentation of functions in this module.
-
-## Install
-
-### Install module from PowerShell Gallery
-
-```powershell
-Install-Module PPS
-```
-
-### Install module from source
-
-```powershell
-git clone https://github.com/thordreier/PPS.git
-cd PPS
-git pull
-.\Build.ps1 -InstallModule
-```
-.Name -eq 'Private Folders'}).Item(0).Children.Item(0).Id
+$privateId = $allGroups.Children.Where({$_.Name -eq 'Private Folders'}).Item(0).Children.Item(0).Id
 
 # Create new credential entry in the private folder
 $credId = New-PpsEntry -GroupId $privateId -Name 'Name Of Password Entry' -Username 'username' -Password 'P@ssw0rd' | Select-Object -ExpandProperty Id
