@@ -24,6 +24,7 @@ function Invoke-PpsApiRequest
     #>
 
     [CmdletBinding()]
+    [OutputType([PSCustomObject])]
     param
     (
         [Parameter(Mandatory=$true)]

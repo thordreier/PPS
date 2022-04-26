@@ -21,6 +21,7 @@ function Get-PpsGroup
     #>
 
     [CmdletBinding()]
+    [OutputType([PSCustomObject])]
     param
     (
         [Parameter(Position=0)]

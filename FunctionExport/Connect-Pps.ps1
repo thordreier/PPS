@@ -27,6 +27,7 @@ function Connect-Pps
     #>
 
     [CmdletBinding(DefaultParameterSetName='Default')]
+    [OutputType([PSCustomObject])]
     param
     (
         [Parameter(Mandatory=$true, Position=0)]

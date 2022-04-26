@@ -18,6 +18,7 @@ function Update-PpsEntry
     #>
 
     [CmdletBinding()]
+    [OutputType([PSCustomObject])]
     param
     (
         [Parameter(Mandatory=$true, ValueFromPipeline=$true)]

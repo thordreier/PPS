@@ -17,12 +17,18 @@ function Get-PpsEntry
             Get-PpsEntry -Id 5cbfabe7-70ee-4041-a1e0-263c9170f650
     #>
 
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName='Default')]
+    [OutputType([PSCustomObject], ParameterSetName='Default')]
+    [OutputType([PSCredential], ParameterSetName='PSCredential')]
     param
     (
         [Parameter(Mandatory=$true, Position=0)]
         [guid]
         $Id,
+
+        [Parameter(ParameterSetName='PSCredential', Mandatory=$true)]
+        [switch]
+        $PSCredential,
 
         [Parameter()]
         [string]
@@ -53,7 +59,14 @@ function Get-PpsEntry
             $entry.Password = Invoke-PpsApiRequest @p -Uri "credential/$Id/password"
 
             # Return
-            $entry
+            if ($PSCredential)
+            {
+                [pscredential]::new($entry.Username, ($entry.Password | ConvertTo-SecureString -AsPlainText -Force))
+            }
+            else
+            {
+                $entry
+            }
         }
         catch
         {

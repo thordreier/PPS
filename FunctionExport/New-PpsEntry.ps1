@@ -39,6 +39,7 @@ function New-PpsEntry
     #>
 
     [CmdletBinding()]
+    [OutputType([PSCustomObject])]
     param
     (
         [Parameter(Mandatory=$true, ValueFromPipeline=$true, ParameterSetName='Entry')]
