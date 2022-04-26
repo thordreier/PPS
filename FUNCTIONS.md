@@ -90,6 +90,8 @@ SYNOPSIS
 SYNTAX
     Get-PpsEntry [-Id] <Guid> [-Session <String>] [<CommonParameters>]
     
+    Get-PpsEntry [-Id] <Guid> -PSCredential [-Session <String>] [<CommonParameters>]
+    
     
 DESCRIPTION
     Get credential entry from Pleasant Password Server
@@ -98,6 +100,8 @@ DESCRIPTION
 PARAMETERS
     -Id <Guid>
         ID of entry to get info about
+        
+    -PSCredential [<SwitchParameter>]
         
     -Session <String>
         Makes it possible to connect to multiple Pleasant Password Servers
@@ -249,6 +253,8 @@ SYNOPSIS
 SYNTAX
     New-PpsEntry -Entry <PSObject> [-Session <String>] [<CommonParameters>]
     
+    New-PpsEntry -GroupId <Guid> [-Name <String>] -PSCredential <PSCredential> [-Url <String>] [-Notes <String>] [-Session <String>] [<CommonParameters>]
+    
     New-PpsEntry -GroupId <Guid> [-Name <String>] [-Username <String>] [-Password <String>] [-Url <String>] [-Notes <String>] [-Session <String>] [<CommonParameters>]
     
     
@@ -271,6 +277,8 @@ PARAMETERS
         
     -Password <String>
         Password of credential in Pleasant Password Server
+        
+    -PSCredential <PSCredential>
         
     -Url <String>
         Url of credential in Pleasant Password Server
