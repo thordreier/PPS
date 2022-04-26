@@ -42,15 +42,17 @@ function New-PpsEntry
     [OutputType([PSCustomObject])]
     param
     (
-        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ParameterSetName='Entry')]
+        [Parameter(ParameterSetName='Entry', Mandatory=$true, ValueFromPipeline=$true)]
         [PSCustomObject]
         $Entry,
 
-        [Parameter(Mandatory=$true, ParameterSetName='Properties')]
+        [Parameter(ParameterSetName='Properties', Mandatory=$true)]
+        [Parameter(ParameterSetName='PSCredential', Mandatory=$true)]
         [guid]
         $GroupId,
 
         [Parameter(ParameterSetName='Properties')]
+        [Parameter(ParameterSetName='PSCredential')]
         [AllowNull()]
         [AllowEmptyString()]
         [string]
@@ -68,13 +70,19 @@ function New-PpsEntry
         [string]
         $Password,
 
+        [Parameter(ParameterSetName='PSCredential', Mandatory=$true)]
+        [PSCredential]
+        $PSCredential,
+
         [Parameter(ParameterSetName='Properties')]
+        [Parameter(ParameterSetName='PSCredential')]
         [AllowNull()]
         [AllowEmptyString()]
         [string]
         $Url,
 
         [Parameter(ParameterSetName='Properties')]
+        [Parameter(ParameterSetName='PSCredential')]
         [AllowNull()]
         [AllowEmptyString()]
         [string]
@@ -107,6 +115,12 @@ function New-PpsEntry
 
             if (-not $Entry)
             {
+                if ($PSCredential)
+                {
+                    $Username = $PSCredential.UserName
+                    $Password = $PSCredential.GetNetworkCredential().Password
+                }
+
                 $Entry = [PSCustomObject] @{
                     GroupId  = $GroupId
                     Name     = $Name
