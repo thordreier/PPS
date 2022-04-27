@@ -5,6 +5,7 @@ Text in this document is automatically created - don't change it manually
 ## Index
 
 [Connect-Pps](#Connect-Pps)<br>
+[Export-PpsEntry](#Export-PpsEntry)<br>
 [Get-PpsEntry](#Get-PpsEntry)<br>
 [Get-PpsGroup](#Get-PpsGroup)<br>
 [Invoke-PpsApiRequest](#Invoke-PpsApiRequest)<br>
@@ -76,6 +77,54 @@ REMARKS
 
 ```
 
+<a name="Export-PpsEntry"></a>
+### Export-PpsEntry
+
+```
+NAME
+    Export-PpsEntry
+    
+SYNOPSIS
+    xxx
+    
+    
+SYNTAX
+    Export-PpsEntry [-RootPath] <String> [[-Session] <String>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    xxx
+    
+
+PARAMETERS
+    -RootPath <String>
+        xxx
+        
+    -Session <String>
+        Makes it possible to connect to multiple Pleasant Password Servers
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (https:/go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>xxx
+    
+    
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "get-help Export-PpsEntry -examples".
+    For more information, type: "get-help Export-PpsEntry -detailed".
+    For technical information, type: "get-help Export-PpsEntry -full".
+
+```
+
 <a name="Get-PpsEntry"></a>
 ### Get-PpsEntry
 
@@ -90,7 +139,9 @@ SYNOPSIS
 SYNTAX
     Get-PpsEntry [-Id] <Guid> [-Session <String>] [<CommonParameters>]
     
-    Get-PpsEntry [-Id] <Guid> [-PSCredential] [-Session <String>] [<CommonParameters>]
+    Get-PpsEntry [-Id] <Guid> -PasswordOnly [-Session <String>] [<CommonParameters>]
+    
+    Get-PpsEntry [-Id] <Guid> -PSCredential [-Session <String>] [<CommonParameters>]
     
     Get-PpsEntry -Path <String> [-Name <String>] [-AllowMultiple] -PSCredential [-Session <String>] [<CommonParameters>]
     
@@ -116,6 +167,8 @@ PARAMETERS
         
     -PSCredential [<SwitchParameter>]
         xxx
+        
+    -PasswordOnly [<SwitchParameter>]
         
     -Session <String>
         Makes it possible to connect to multiple Pleasant Password Servers

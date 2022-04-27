@@ -38,6 +38,7 @@ function Get-PpsEntry
     (
         [Parameter(ParameterSetName='Id', Mandatory=$true, Position=0)]
         [Parameter(ParameterSetName='IdCred', Mandatory=$true, Position=0)]
+        [Parameter(ParameterSetName='IdPw', Mandatory=$true, Position=0)]
         [guid]
         $Id,
 
@@ -56,10 +57,14 @@ function Get-PpsEntry
         [switch]
         $AllowMultiple,
 
-        [Parameter(ParameterSetName='IdCred', Mandatory=$true, Position=0)]
+        [Parameter(ParameterSetName='IdCred', Mandatory=$true)]
         [Parameter(ParameterSetName='PathCred', Mandatory=$true)]
         [switch]
         $PSCredential,
+
+        [Parameter(ParameterSetName='IdPw', Mandatory=$true)]
+        [switch]
+        $PasswordOnly,
 
         [Parameter()]
         [string]
@@ -86,8 +91,11 @@ function Get-PpsEntry
                 Session = $Session
             }
 
-
-            if ($Id)
+            if ($PasswordOnly -and $Id)
+            {
+                $entry = @([PSCustomObject] @{Id = $Id; Password = ''})
+            }
+            elseif ($Id)
             {
                 $entry = @(Invoke-PpsApiRequest @p -Uri "credential/$Id")
             }
@@ -120,6 +128,13 @@ function Get-PpsEntry
                 foreach ($e in $entry)
                 {
                     [pscredential]::new($e.Username, ($e.Password | ConvertTo-SecureString -AsPlainText -Force))
+                }
+            }
+            elseif ($PasswordOnly)
+            {
+                foreach ($e in $entry)
+                {
+                    $e.Password
                 }
             }
             else
