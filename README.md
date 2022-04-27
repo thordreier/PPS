@@ -22,7 +22,7 @@ $cred = Get-PpsEntry -Id $credId
 
 # Change credential entry
 $cred.Name = 'New Name'
-Update-PpsEntry -Entry $cred
+Set-PpsEntry -Entry $cred
 
 # Get info about credentials in a folder
 (Get-PpsGroup -Id aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee).Credentials | Select-Object -Property Id,Name,Username

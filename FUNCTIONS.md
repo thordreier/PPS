@@ -10,7 +10,7 @@ Text in this document is automatically created - don't change it manually
 [Invoke-PpsApiRequest](#Invoke-PpsApiRequest)<br>
 [New-PpsEntry](#New-PpsEntry)<br>
 [New-PpsGroup](#New-PpsGroup)<br>
-[Update-PpsEntry](#Update-PpsEntry)<br>
+[Set-PpsEntry](#Set-PpsEntry)<br>
 
 ## Functions
 
@@ -376,19 +376,19 @@ REMARKS
 
 ```
 
-<a name="Update-PpsEntry"></a>
-### Update-PpsEntry
+<a name="Set-PpsEntry"></a>
+### Set-PpsEntry
 
 ```
 NAME
-    Update-PpsEntry
+    Set-PpsEntry
     
 SYNOPSIS
     Update existing credential entry in Pleasant Password Server
     
     
 SYNTAX
-    Update-PpsEntry [-Entry] <PSObject> [[-Session] <String>] [<CommonParameters>]
+    Set-PpsEntry [-Entry] <PSObject> [[-Session] <String>] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -410,7 +410,7 @@ PARAMETERS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS C:\>$e=Get-PpsEntry -Id c079a48c-a465-4605-9477-2b4baa743e6f; $e.Username='user'; $e|Update-PpsEntry
+    PS C:\>$e=Get-PpsEntry -Id c079a48c-a465-4605-9477-2b4baa743e6f; $e.Username='user'; $e|Set-PpsEntry
     
     
     
@@ -418,9 +418,9 @@ PARAMETERS
     
     
 REMARKS
-    To see the examples, type: "get-help Update-PpsEntry -examples".
-    For more information, type: "get-help Update-PpsEntry -detailed".
-    For technical information, type: "get-help Update-PpsEntry -full".
+    To see the examples, type: "get-help Set-PpsEntry -examples".
+    For more information, type: "get-help Set-PpsEntry -detailed".
+    For technical information, type: "get-help Set-PpsEntry -full".
 
 ```
 

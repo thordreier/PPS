@@ -1,4 +1,4 @@
-function Update-PpsEntry
+function Set-PpsEntry
 {
     <#
         .SYNOPSIS
@@ -14,7 +14,7 @@ function Update-PpsEntry
             Makes it possible to connect to multiple Pleasant Password Servers
 
         .EXAMPLE
-            $e=Get-PpsEntry -Id c079a48c-a465-4605-9477-2b4baa743e6f; $e.Username='user'; $e|Update-PpsEntry
+            $e=Get-PpsEntry -Id c079a48c-a465-4605-9477-2b4baa743e6f; $e.Username='user'; $e|Set-PpsEntry
     #>
 
     [CmdletBinding()]
