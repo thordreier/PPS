@@ -10,6 +10,15 @@ function Get-PpsEntry
         .PARAMETER Id
             ID of entry to get info about
 
+        .PARAMETER Path
+            xxx
+
+        .PARAMETER Name
+            xxx
+
+        .PARAMETER AllowMultiple
+            xxx
+
         .PARAMETER PSCredential
             xxx
 
@@ -20,26 +29,35 @@ function Get-PpsEntry
             Get-PpsEntry -Id 5cbfabe7-70ee-4041-a1e0-263c9170f650
     #>
 
-    [CmdletBinding(DefaultParameterSetName='Default')]
-    [OutputType([PSCustomObject], ParameterSetName='Default')]
-    [OutputType([PSCredential], ParameterSetName='PSCredential')]
+    [CmdletBinding(DefaultParameterSetName='Id')]
+    [OutputType([PSCustomObject], ParameterSetName='Id')]
+    [OutputType([PSCustomObject], ParameterSetName='Path')]
+    [OutputType([PSCredential], ParameterSetName='IdCred')]
+    [OutputType([PSCredential], ParameterSetName='PathCred')]
     param
     (
-        [Parameter(Mandatory=$true, Position=0)]
+        [Parameter(ParameterSetName='Id', Mandatory=$true, Position=0)]
+        [Parameter(ParameterSetName='IdCred', Mandatory=$true, Position=0)]
         [guid]
         $Id,
 
-
-        [Parameter(Mandatory=$true)]
+        [Parameter(ParameterSetName='Path', Mandatory=$true)]
+        [Parameter(ParameterSetName='PathCred', Mandatory=$true)]
         [string]
         $Path,
 
+        [Parameter(ParameterSetName='Path')]
+        [Parameter(ParameterSetName='PathCred')]
+        [string]
+        $Name,
 
+        [Parameter(ParameterSetName='Path')]
+        [Parameter(ParameterSetName='PathCred')]
+        [switch]
+        $AllowMultiple,
 
-
-
-
-        [Parameter(Mandatory=$true, ParameterSetName='PSCredential')]
+        [Parameter(ParameterSetName='IdCred', Mandatory=$true, Position=0)]
+        [Parameter(ParameterSetName='PathCred', Mandatory=$true)]
         [switch]
         $PSCredential,
 
@@ -68,13 +86,41 @@ function Get-PpsEntry
                 Session = $Session
             }
 
-            $entry          = Invoke-PpsApiRequest @p -Uri "credential/$Id"
-            $entry.Password = Invoke-PpsApiRequest @p -Uri "credential/$Id/password"
+
+            if ($Id)
+            {
+                $entry = @(Invoke-PpsApiRequest @p -Uri "credential/$Id")
+            }
+            elseif ($Path)
+            {
+                $group = Get-PpsGroup @p -Path $Path
+                $entry = @($group.Credentials)
+                if ($Name)
+                {
+                    $entry = @($entry | Where-Object -Property Name -Like -Value $Name)
+                }
+                if ($entry.Count -gt 1 -and -not $AllowMultiple)
+                {
+                    throw "More than one ($($entry.Count)) entries returned and -AllowMultiple is not set"
+                }
+            }
+            else
+            {
+                throw 'Should never happen'
+            }
+
+            foreach ($e in $entry)
+            {
+                $e.Password = Invoke-PpsApiRequest @p -Uri "credential/$($e.Id)/password"
+            }
 
             # Return
             if ($PSCredential)
             {
-                [pscredential]::new($entry.Username, ($entry.Password | ConvertTo-SecureString -AsPlainText -Force))
+                foreach ($e in $entry)
+                {
+                    [pscredential]::new($e.Username, ($e.Password | ConvertTo-SecureString -AsPlainText -Force))
+                }
             }
             else
             {

@@ -90,7 +90,11 @@ SYNOPSIS
 SYNTAX
     Get-PpsEntry [-Id] <Guid> [-Session <String>] [<CommonParameters>]
     
-    Get-PpsEntry [-Id] <Guid> -PSCredential [-Session <String>] [<CommonParameters>]
+    Get-PpsEntry [-Id] <Guid> [-PSCredential] [-Session <String>] [<CommonParameters>]
+    
+    Get-PpsEntry -Path <String> [-Name <String>] [-AllowMultiple] -PSCredential [-Session <String>] [<CommonParameters>]
+    
+    Get-PpsEntry -Path <String> [-Name <String>] [-AllowMultiple] [-Session <String>] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -100,6 +104,15 @@ DESCRIPTION
 PARAMETERS
     -Id <Guid>
         ID of entry to get info about
+        
+    -Path <String>
+        xxx
+        
+    -Name <String>
+        xxx
+        
+    -AllowMultiple [<SwitchParameter>]
+        xxx
         
     -PSCredential [<SwitchParameter>]
         xxx
