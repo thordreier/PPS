@@ -51,31 +51,43 @@ function New-PpsEntry
         [guid]
         $GroupId,
 
+        [Parameter(ParameterSetName='PropertiesPath', Mandatory=$true)]
+        [Parameter(ParameterSetName='PSCredentialPath', Mandatory=$true)]
+        [string]
+        $Path,
+
         [Parameter(ParameterSetName='Properties')]
         [Parameter(ParameterSetName='PSCredential')]
+        [Parameter(ParameterSetName='PropertiesPath')]
+        [Parameter(ParameterSetName='PSCredentialPath')]
         [AllowNull()]
         [AllowEmptyString()]
         [string]
         $Name,
 
         [Parameter(ParameterSetName='Properties')]
+        [Parameter(ParameterSetName='PropertiesPath')]
         [AllowNull()]
         [AllowEmptyString()]
         [string]
         $Username,
 
         [Parameter(ParameterSetName='Properties')]
+        [Parameter(ParameterSetName='PropertiesPath')]
         [AllowNull()]
         [AllowEmptyString()]
         [string]
         $Password,
 
         [Parameter(ParameterSetName='PSCredential', Mandatory=$true)]
+        [Parameter(ParameterSetName='PSCredentialPath', Mandatory=$true)]
         [PSCredential]
         $PSCredential,
 
         [Parameter(ParameterSetName='Properties')]
         [Parameter(ParameterSetName='PSCredential')]
+        [Parameter(ParameterSetName='PropertiesPath')]
+        [Parameter(ParameterSetName='PSCredentialPath')]
         [AllowNull()]
         [AllowEmptyString()]
         [string]
@@ -83,6 +95,8 @@ function New-PpsEntry
 
         [Parameter(ParameterSetName='Properties')]
         [Parameter(ParameterSetName='PSCredential')]
+        [Parameter(ParameterSetName='PropertiesPath')]
+        [Parameter(ParameterSetName='PSCredentialPath')]
         [AllowNull()]
         [AllowEmptyString()]
         [string]
@@ -119,6 +133,11 @@ function New-PpsEntry
                 {
                     $Username = $PSCredential.UserName
                     $Password = $PSCredential.GetNetworkCredential().Password
+                }
+
+                if ($Path)
+                {
+                    $GroupId = New-PpsGroup @p -Path $Path -ReturnId
                 }
 
                 $Entry = [PSCustomObject] @{
