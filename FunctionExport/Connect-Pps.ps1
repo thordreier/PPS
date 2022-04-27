@@ -74,6 +74,7 @@ function Connect-Pps
             # Make sure that we don't continue on error, and that we catches the error
             $ErrorActionPreference = 'Stop'
 
+            if ($Uri -notmatch ':') {$Uri = "https://${Uri}:10001"}
             $Uri = $Uri -replace '/$'
 
             if (-not ($Credential -or $Username -or $Password))
