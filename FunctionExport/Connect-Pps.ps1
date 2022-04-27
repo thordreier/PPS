@@ -34,15 +34,15 @@ function Connect-Pps
         [string]
         $Uri,
 
-        [Parameter(Mandatory=$true, ValueFromPipelineByPropertyName=$true, ParameterSetName='Credential')]
+        [Parameter(ParameterSetName='Credential', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [pscredential]
         $Credential,
 
-        [Parameter(Mandatory=$true, ValueFromPipelineByPropertyName=$true, ParameterSetName='UserPass')]
+        [Parameter(ParameterSetName='UserPass', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [string]
         $Username,
 
-        [Parameter(Mandatory=$true, ValueFromPipelineByPropertyName=$true, ParameterSetName='UserPass')]
+        [Parameter(ParameterSetName='UserPass', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [string]
         $Password,
 

@@ -33,19 +33,19 @@ function New-PpsGroup
     [OutputType([PSCustomObject])]
     param
     (
-        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ParameterSetName='Group')]
+        [Parameter(ParameterSetName='Group', Mandatory=$true, ValueFromPipeline=$true)]
         [PSCustomObject]
         $Group,
 
-        [Parameter(Mandatory=$true, ParameterSetName='Properties')]
+        [Parameter(ParameterSetName='Properties', Mandatory=$true)]
         [guid]
         $ParentId,
 
-        [Parameter(Mandatory=$true, ParameterSetName='Properties')]
+        [Parameter(ParameterSetName='Properties', Mandatory=$true)]
         [string]
         $Name,
 
-        [Parameter(Mandatory=$true, ParameterSetName='Path')]
+        [Parameter(ParameterSetName='Path', Mandatory=$true)]
         [string]
         $Path,
 

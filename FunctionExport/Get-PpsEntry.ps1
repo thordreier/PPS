@@ -29,7 +29,17 @@ function Get-PpsEntry
         [guid]
         $Id,
 
-        [Parameter(ParameterSetName='PSCredential', Mandatory=$true)]
+
+        [Parameter(Mandatory=$true)]
+        [string]
+        $Path,
+
+
+
+
+
+
+        [Parameter(Mandatory=$true, ParameterSetName='PSCredential')]
         [switch]
         $PSCredential,
 
