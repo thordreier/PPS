@@ -140,7 +140,11 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-PpsGroup [[-Id] <Guid>] [-Session <String>] [<CommonParameters>]
+    Get-PpsGroup -All [-Session <String>] [<CommonParameters>]
+    
+    Get-PpsGroup [-Id] <Guid> [-Session <String>] [<CommonParameters>]
+    
+    Get-PpsGroup [-Path] <String> [-ReturnId] [-Session <String>] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -148,8 +152,14 @@ DESCRIPTION
     
 
 PARAMETERS
+    -All [<SwitchParameter>]
+        
     -Id <Guid>
         ID of group to get info about
+        
+    -Path <String>
+        
+    -ReturnId [<SwitchParameter>]
         
     -Session <String>
         Makes it possible to connect to multiple Pleasant Password Servers
@@ -162,7 +172,7 @@ PARAMETERS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS C:\>Get-PpsGroup
+    PS C:\>Get-PpsGroup -Id f6190167-a9a1-4386-a8cd-ae46008c9188
     
     
     
@@ -171,7 +181,7 @@ PARAMETERS
     
     -------------------------- EXAMPLE 2 --------------------------
     
-    PS C:\>Get-PpsGroup -Id f6190167-a9a1-4386-a8cd-ae46008c9188
+    PS C:\>Get-PpsGroup -All
     
     
     
