@@ -10,6 +10,9 @@ function Get-PpsEntry
         .PARAMETER Id
             ID of entry to get info about
 
+        .PARAMETER PSCredential
+            xxx
+
         .PARAMETER Session
             Makes it possible to connect to multiple Pleasant Password Servers
 

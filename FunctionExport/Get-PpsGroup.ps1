@@ -7,8 +7,17 @@ function Get-PpsGroup
         .DESCRIPTION
             Get credential group (folder) from Pleasant Password Server
 
+        .PARAMETER All
+            xxx
+
         .PARAMETER Id
             ID of group to get info about
+
+        .PARAMETER Path
+            xxx
+
+        .PARAMETER ReturnId
+            xxx
 
         .PARAMETER Session
             Makes it possible to connect to multiple Pleasant Password Servers
@@ -36,6 +45,7 @@ function Get-PpsGroup
         [string]
         $Path,
 
+        [Parameter(ParameterSetName='Id')]
         [Parameter(ParameterSetName='Path')]
         [switch]
         $ReturnId,
@@ -108,13 +118,14 @@ function Get-PpsGroup
                 $uri = "$uri/$Id"
             }
 
-            # Return
             if ($ReturnId)
             {
+                # Return
                 $Id
             }
             else
             {
+                # Return
                 Invoke-PpsApiRequest @p -Uri $uri
             }
         }

@@ -102,6 +102,7 @@ PARAMETERS
         ID of entry to get info about
         
     -PSCredential [<SwitchParameter>]
+        xxx
         
     -Session <String>
         Makes it possible to connect to multiple Pleasant Password Servers
@@ -142,7 +143,7 @@ SYNOPSIS
 SYNTAX
     Get-PpsGroup -All [-Session <String>] [<CommonParameters>]
     
-    Get-PpsGroup [-Id] <Guid> [-Session <String>] [<CommonParameters>]
+    Get-PpsGroup [-Id] <Guid> [-ReturnId] [-Session <String>] [<CommonParameters>]
     
     Get-PpsGroup [-Path] <String> [-ReturnId] [-Session <String>] [<CommonParameters>]
     
@@ -153,13 +154,16 @@ DESCRIPTION
 
 PARAMETERS
     -All [<SwitchParameter>]
+        xxx
         
     -Id <Guid>
         ID of group to get info about
         
     -Path <String>
+        xxx
         
     -ReturnId [<SwitchParameter>]
+        xxx
         
     -Session <String>
         Makes it possible to connect to multiple Pleasant Password Servers
@@ -342,9 +346,11 @@ SYNOPSIS
     
     
 SYNTAX
-    New-PpsGroup -Group <PSObject> [-Session <String>] [<CommonParameters>]
+    New-PpsGroup -Group <PSObject> [-ReturnId] [-Session <String>] [<CommonParameters>]
     
-    New-PpsGroup -ParentId <Guid> -Name <String> [-Session <String>] [<CommonParameters>]
+    New-PpsGroup -ParentId <Guid> -Name <String> [-ReturnId] [-Session <String>] [<CommonParameters>]
+    
+    New-PpsGroup -Path <String> [-ReturnId] [-Session <String>] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -360,6 +366,12 @@ PARAMETERS
         
     -Name <String>
         Name of the new group (folder)
+        
+    -Path <String>
+        xxx
+        
+    -ReturnId [<SwitchParameter>]
+        xxx
         
     -Session <String>
         Makes it possible to connect to multiple Pleasant Password Servers

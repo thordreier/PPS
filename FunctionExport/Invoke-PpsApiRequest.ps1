@@ -80,7 +80,7 @@ function Invoke-PpsApiRequest
             }
             if ($Data)
             {
-                $requestParams['Body']        = ConvertTo-Json -Depth 9 -InputObject $Data
+                $requestParams['Body']        = ConvertTo-Json -Compress -Depth 9 -InputObject $Data
                 $requestParams['ContentType'] = 'application/json; charset=utf-8'
             }
 

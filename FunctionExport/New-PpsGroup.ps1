@@ -16,6 +16,12 @@ function New-PpsGroup
         .PARAMETER Name
             Name of the new group (folder)
 
+        .PARAMETER Path
+            xxx
+
+        .PARAMETER ReturnId
+            xxx
+
         .PARAMETER Session
             Makes it possible to connect to multiple Pleasant Password Servers
 
@@ -38,6 +44,14 @@ function New-PpsGroup
         [Parameter(Mandatory=$true, ParameterSetName='Properties')]
         [string]
         $Name,
+
+        [Parameter(Mandatory=$true, ParameterSetName='Path')]
+        [string]
+        $Path,
+
+        [Parameter()]
+        [switch]
+        $ReturnId,
 
         [Parameter()]
         [string]
@@ -64,20 +78,41 @@ function New-PpsGroup
                 Session = $Session
             }
 
-            if (-not $Group)
+            if ($Path)
             {
-                $Group = [PSCustomObject] @{
-                    ParentId = $ParentId
-                    Name     = $Name
+                try
+                {
+                    # Return
+                    Get-PpsGroup @p -Path $Path -ReturnId:$ReturnId
+                }
+                catch
+                {
+                    if ($Path -notmatch '/')
+                    {
+                        throw "First part of path should always be Root, not $Path"
+                    }
+
+                    $parentPath, $n = $Path -split '/(?=[^/]*$)'
+                    $parentId = New-PpsGroup @p -Path $parentPath -ReturnId
+
+                    # Return
+                    New-PpsGroup @p -ParentId $ParentId -Name $n -ReturnId:$ReturnId
                 }
             }
+            else
+            {
+                if (-not $Group)
+                {
+                    $Group = [PSCustomObject] @{
+                        ParentId = $ParentId
+                        Name     = $Name
+                    }
+                }
 
-            $id = Invoke-PpsApiRequest @p -Uri "credentialgroup" -Data $Group -Method Post
+                $id = Invoke-PpsApiRequest @p -Uri "credentialgroup" -Data $Group -Method Post
 
-            # Return
-            [PSCustomObject] @{
-                Id  = $id
-                Uri = "$($script:SessionList[$Session].Uri)/WebClient/Main?itemId=$id"
+                # Return
+                Get-PpsGroup @p -Id $Id -ReturnId:$ReturnId
             }
         }
         catch
