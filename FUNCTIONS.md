@@ -271,6 +271,10 @@ SYNTAX
     
     New-PpsEntry -GroupId <Guid> [-Name <String>] [-Username <String>] [-Password <String>] [-Url <String>] [-Notes <String>] [-Session <String>] [<CommonParameters>]
     
+    New-PpsEntry -Path <String> [-Name <String>] -PSCredential <PSCredential> [-Url <String>] [-Notes <String>] [-Session <String>] [<CommonParameters>]
+    
+    New-PpsEntry -Path <String> [-Name <String>] [-Username <String>] [-Password <String>] [-Url <String>] [-Notes <String>] [-Session <String>] [<CommonParameters>]
+    
     
 DESCRIPTION
     Create new credential entry in Pleasant Password Server
@@ -282,6 +286,8 @@ PARAMETERS
         
     -GroupId <Guid>
         ID of credential group to create credential entry in
+        
+    -Path <String>
         
     -Name <String>
         Name of credential in Pleasant Password Server
