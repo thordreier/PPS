@@ -10,6 +10,24 @@ function Set-PpsEntry
         .PARAMETER Entry
             Object with updated info
 
+        .PARAMETER Name
+            Name of credential in Pleasant Password Server
+
+        .PARAMETER Username
+            Username of credential in Pleasant Password Server
+
+        .PARAMETER Password
+            Password of credential in Pleasant Password Server
+
+        .PARAMETER PSCredential
+            xxx
+
+        .PARAMETER Url
+            Url of credential in Pleasant Password Server
+
+        .PARAMETER Notes
+            Notes of credential in Pleasant Password Server
+
         .PARAMETER Session
             Makes it possible to connect to multiple Pleasant Password Servers
 
@@ -17,13 +35,50 @@ function Set-PpsEntry
             $e=Get-PpsEntry -Id c079a48c-a465-4605-9477-2b4baa743e6f; $e.Username='user'; $e|Set-PpsEntry
     #>
 
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName='Properties')]
     [OutputType([PSCustomObject])]
     param
     (
         [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
         [PSCustomObject]
         $Entry,
+
+        [Parameter(ParameterSetName='Properties')]
+        [Parameter(ParameterSetName='PSCredential')]
+        [AllowNull()]
+        [AllowEmptyString()]
+        [string]
+        $Name,
+
+        [Parameter(ParameterSetName='Properties')]
+        [AllowNull()]
+        [AllowEmptyString()]
+        [string]
+        $Username,
+
+        [Parameter(ParameterSetName='Properties')]
+        [AllowNull()]
+        [AllowEmptyString()]
+        [string]
+        $Password,
+
+        [Parameter(ParameterSetName='PSCredential', Mandatory=$true)]
+        [PSCredential]
+        $PSCredential,
+
+        [Parameter(ParameterSetName='Properties')]
+        [Parameter(ParameterSetName='PSCredential')]
+        [AllowNull()]
+        [AllowEmptyString()]
+        [string]
+        $Url,
+
+        [Parameter(ParameterSetName='Properties')]
+        [Parameter(ParameterSetName='PSCredential')]
+        [AllowNull()]
+        [AllowEmptyString()]
+        [string]
+        $Notes,
 
         [Parameter()]
         [string]
@@ -48,6 +103,19 @@ function Set-PpsEntry
 
             $p = @{
                 Session = $Session
+            }
+
+            if ($PSCredential)
+            {
+                $PSBoundParameters['Username'] = $PSCredential.UserName
+                $PSBoundParameters['Password'] = $PSCredential.GetNetworkCredential().Password
+            }
+
+            'Name', 'Username', 'Password', 'Url', 'Notes' | ForEach-Object -Process {
+                if ($PSBoundParameters.ContainsKey($_))
+                {
+                    $Entry.$_ = $PSBoundParameters[$_]
+                }
             }
 
             $id = $Entry.Id

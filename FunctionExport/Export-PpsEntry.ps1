@@ -10,6 +10,9 @@ function Export-PpsEntry
         .PARAMETER RootPath
             xxx
 
+        .PARAMETER WithId
+            xxx
+
         .PARAMETER Session
             Makes it possible to connect to multiple Pleasant Password Servers
 
@@ -24,6 +27,10 @@ function Export-PpsEntry
         [Parameter(Mandatory=$true)]
         [string]
         $RootPath,
+
+        [Parameter()]
+        [switch]
+        $WithId,
 
         [Parameter()]
         [string]
@@ -44,7 +51,7 @@ function Export-PpsEntry
         {
             $group = Get-PpsGroup @p -Id $GroupId
             $group.Credentials  | ForEach-Object -Process {
-                [PSCustomObject] @{
+                $e = [PSCustomObject] @{
                     Path     = $Path -join '/'
                     Name     = $_.Name
                     Username = $_.UserName
@@ -52,6 +59,8 @@ function Export-PpsEntry
                     Url      = $_.Url
                     Notes    = $_.Notes
                 }
+                if ($WithId) {$e | Add-Member -NotePropertyName Id -NotePropertyValue $_.Id}
+                $e
             }
             $group.Children | ForEach-Object -Process {
                 GetGrp -GroupId $_.Id -Path ($Path + $_.Name)

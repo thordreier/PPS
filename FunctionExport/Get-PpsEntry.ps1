@@ -19,7 +19,7 @@ function Get-PpsEntry
         .PARAMETER AllowMultiple
             xxx
 
-        .PARAMETER PSCredential
+        .PARAMETER ReturnPSCredential
             xxx
 
         .PARAMETER Session
@@ -60,7 +60,7 @@ function Get-PpsEntry
         [Parameter(ParameterSetName='IdCred', Mandatory=$true)]
         [Parameter(ParameterSetName='PathCred', Mandatory=$true)]
         [switch]
-        $PSCredential,
+        $ReturnPSCredential,
 
         [Parameter(ParameterSetName='IdPw', Mandatory=$true)]
         [switch]
@@ -123,7 +123,7 @@ function Get-PpsEntry
             }
 
             # Return
-            if ($PSCredential)
+            if ($ReturnPSCredential)
             {
                 foreach ($e in $entry)
                 {

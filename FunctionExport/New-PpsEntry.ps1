@@ -22,6 +22,9 @@ function New-PpsEntry
         .PARAMETER Password
             Password of credential in Pleasant Password Server
 
+        .PARAMETER PSCredential
+            xxx
+
         .PARAMETER Url
             Url of credential in Pleasant Password Server
 
