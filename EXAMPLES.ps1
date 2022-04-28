@@ -2,7 +2,7 @@
 Connect-Pps -Uri https://password.company.tld:10001
 
 # Get ID of private folder
-$allGroups = Get-PpsGroup
+$allGroups = Get-PpsGroup -All
 $privateId = $allGroups.Children.Where({$_.Name -eq 'Private Folders'}).Item(0).Children.Item(0).Id
 
 # Create new credential entry in the private folder
@@ -33,3 +33,6 @@ function ProcessGroup ($SrcGroupId, $DstGroupId)
     }
 }
 ProcessGroup -SrcGroupId $SrcGroupId -DstGroupId $DstGroupId
+
+# Sync from one folder to another
+Export-PpsEntry -RootPath 'Root/Private Folders/xxx/export' | Import-PpsEntry -RootPath 'Root/Private Folders/xxx/import'

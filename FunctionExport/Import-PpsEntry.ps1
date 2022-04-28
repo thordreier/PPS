@@ -69,8 +69,20 @@ function Import-PpsEntry
             $CheckProperty | ForEach-Object -Process {if ($_ -notin $allProperties) {throw "$_ is not allowed in CheckProperty, only $($allProperties -join ',') is allowed"}}
             $CheckProperty = @('Path') + $CheckProperty
 
-            $existing = Export-PpsEntry -RootPath $RootPath -WithId
-            $existingHash = $existing | Group-Object -Property $CheckProperty -AsHashTable -AsString
+            try
+            {
+                $ErrorActionPreference = 'Stop'
+                $existing = @(Export-PpsEntry -RootPath $RootPath -WithId)
+                if (-not ($existingHash = $existing | Group-Object -Property $CheckProperty -AsHashTable -AsString))
+                {
+                    $existingHash = @{}
+                }
+            }
+            catch
+            {
+                $existing = @()
+                $existingHash = @{}
+            }
         }
     }
 
