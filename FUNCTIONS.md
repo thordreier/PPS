@@ -8,6 +8,7 @@ Text in this document is automatically created - don't change it manually
 [Export-PpsEntry](#Export-PpsEntry)<br>
 [Get-PpsEntry](#Get-PpsEntry)<br>
 [Get-PpsGroup](#Get-PpsGroup)<br>
+[Import-PpsEntry](#Import-PpsEntry)<br>
 [Invoke-PpsApiRequest](#Invoke-PpsApiRequest)<br>
 [New-PpsEntry](#New-PpsEntry)<br>
 [New-PpsGroup](#New-PpsGroup)<br>
@@ -89,7 +90,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Export-PpsEntry [-RootPath] <String> [[-Session] <String>] [<CommonParameters>]
+    Export-PpsEntry [-RootPath] <String> [-WithId] [[-Session] <String>] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -98,6 +99,9 @@ DESCRIPTION
 
 PARAMETERS
     -RootPath <String>
+        xxx
+        
+    -WithId [<SwitchParameter>]
         xxx
         
     -Session <String>
@@ -141,9 +145,9 @@ SYNTAX
     
     Get-PpsEntry [-Id] <Guid> -PasswordOnly [-Session <String>] [<CommonParameters>]
     
-    Get-PpsEntry [-Id] <Guid> -PSCredential [-Session <String>] [<CommonParameters>]
+    Get-PpsEntry [-Id] <Guid> -ReturnPSCredential [-Session <String>] [<CommonParameters>]
     
-    Get-PpsEntry -Path <String> [-Name <String>] [-AllowMultiple] -PSCredential [-Session <String>] [<CommonParameters>]
+    Get-PpsEntry -Path <String> [-Name <String>] [-AllowMultiple] -ReturnPSCredential [-Session <String>] [<CommonParameters>]
     
     Get-PpsEntry -Path <String> [-Name <String>] [-AllowMultiple] [-Session <String>] [<CommonParameters>]
     
@@ -165,7 +169,7 @@ PARAMETERS
     -AllowMultiple [<SwitchParameter>]
         xxx
         
-    -PSCredential [<SwitchParameter>]
+    -ReturnPSCredential [<SwitchParameter>]
         xxx
         
     -PasswordOnly [<SwitchParameter>]
@@ -262,6 +266,72 @@ REMARKS
     To see the examples, type: "get-help Get-PpsGroup -examples".
     For more information, type: "get-help Get-PpsGroup -detailed".
     For technical information, type: "get-help Get-PpsGroup -full".
+
+```
+
+<a name="Import-PpsEntry"></a>
+### Import-PpsEntry
+
+```
+NAME
+    Import-PpsEntry
+    
+SYNOPSIS
+    xxx
+    
+    
+SYNTAX
+    Import-PpsEntry [-RootPath] <String> [-InputObject] <PSObject> [-NoCheck] [[-CheckProperty] <String[]>] [[-Session] <String>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    xxx
+    
+
+PARAMETERS
+    -RootPath <String>
+        xxx
+        
+    -InputObject <PSObject>
+        xxx
+        
+    -NoCheck [<SwitchParameter>]
+        xxx
+        
+    -CheckProperty <String[]>
+        xxx
+        
+    -Session <String>
+        Makes it possible to connect to multiple Pleasant Password Servers
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (https:/go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>xxx
+    
+    
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS C:\>xxx
+    
+    
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "get-help Import-PpsEntry -examples".
+    For more information, type: "get-help Import-PpsEntry -detailed".
+    For technical information, type: "get-help Import-PpsEntry -full".
 
 ```
 
@@ -365,6 +435,7 @@ PARAMETERS
         Password of credential in Pleasant Password Server
         
     -PSCredential <PSCredential>
+        xxx
         
     -Url <String>
         Url of credential in Pleasant Password Server
@@ -482,7 +553,9 @@ SYNOPSIS
     
     
 SYNTAX
-    Set-PpsEntry [-Entry] <PSObject> [[-Session] <String>] [<CommonParameters>]
+    Set-PpsEntry -Entry <PSObject> [-Name <String>] [-Username <String>] [-Password <String>] [-Url <String>] [-Notes <String>] [-Session <String>] [<CommonParameters>]
+    
+    Set-PpsEntry -Entry <PSObject> [-Name <String>] -PSCredential <PSCredential> [-Url <String>] [-Notes <String>] [-Session <String>] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -492,6 +565,24 @@ DESCRIPTION
 PARAMETERS
     -Entry <PSObject>
         Object with updated info
+        
+    -Name <String>
+        Name of credential in Pleasant Password Server
+        
+    -Username <String>
+        Username of credential in Pleasant Password Server
+        
+    -Password <String>
+        Password of credential in Pleasant Password Server
+        
+    -PSCredential <PSCredential>
+        xxx
+        
+    -Url <String>
+        Url of credential in Pleasant Password Server
+        
+    -Notes <String>
+        Notes of credential in Pleasant Password Server
         
     -Session <String>
         Makes it possible to connect to multiple Pleasant Password Servers
