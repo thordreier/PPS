@@ -104,7 +104,7 @@ function Get-PpsGroup
                     $parent = Get-PpsGroup @p -Path $parentPath
                     try
                     {
-                        $script:GroupCache[$Path] = $Id = $parent.Children | Where-Object -Property Name -EQ -Value $Name | Select-Object -First 1 -ExpandProperty Id
+                        $script:GroupCache[$Path] = $Id = $parent.Children | Where-Object -Property Name -CEQ -Value $Name | Select-Object -First 1 -ExpandProperty Id
                     }
                     catch
                     {

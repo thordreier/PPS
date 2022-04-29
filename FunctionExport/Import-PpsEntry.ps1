@@ -60,6 +60,10 @@ function Import-PpsEntry
         $origErrorActionPreference = $ErrorActionPreference
         $verbose = $PSBoundParameters.ContainsKey('Verbose') -or ($VerbosePreference -ne 'SilentlyContinue')
 
+        $p = @{
+            Session = $Session
+        }
+
         $allProperties = @('Name', 'Username', 'Password', 'Url', 'Notes')
 
         if (-not $NoCheck)
@@ -72,7 +76,7 @@ function Import-PpsEntry
             try
             {
                 $ErrorActionPreference = 'Stop'
-                $existing = @(Export-PpsEntry -RootPath $RootPath -WithId)
+                $existing = @(Export-PpsEntry @p -RootPath $RootPath -WithId)
                 if (-not ($existingHash = $existing | Group-Object -Property $CheckProperty -AsHashTable -AsString))
                 {
                     $existingHash = @{}
@@ -95,10 +99,6 @@ function Import-PpsEntry
             # Make sure that we don't continue on error, and that we catches the error
             $ErrorActionPreference = 'Stop'
 
-            $p = @{
-                Session = $Session
-            }
-
             $fullPath = if ($InputObject.Path) {$RootPath + '/' + $InputObject.Path} else {$RootPath}
 
             $entryParams = @{}
@@ -118,7 +118,7 @@ function Import-PpsEntry
                     if ($e.Count -gt 1) {Write-Warning -Message "Found $($e.Count) objects matching ""$key"", just selecting first match"}
                     $e = $e[0]
                     $e | Add-Member -NotePropertyName _PROCESSED_ -NotePropertyValue $true
-                    if (Compare-Object -ReferenceObject $e -DifferenceObject $InputObject -Property $allProperties)
+                    if (Compare-Object -ReferenceObject $e -DifferenceObject $InputObject -Property $allProperties -CaseSensitive)
                     {
                         "Updating $key" | Write-Host
                         $null = Get-PpsEntry @p -Id $e.Id | Set-PpsEntry @p @entryParams

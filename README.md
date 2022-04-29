@@ -7,11 +7,13 @@ PowerShell module: Interact with Pleasant Password Server API.
 ### Examples
 
 ```powershell
+################################### Examples ###################################
+
 # Connect to Pleasant Password Server
 Connect-Pps -Uri https://password.company.tld:10001
 
 # Get ID of private folder
-$allGroups = Get-PpsGroup
+$allGroups = Get-PpsGroup -All
 $privateId = $allGroups.Children.Where({$_.Name -eq 'Private Folders'}).Item(0).Children.Item(0).Id
 
 # Create new credential entry in the private folder
@@ -42,6 +44,66 @@ function ProcessGroup ($SrcGroupId, $DstGroupId)
     }
 }
 ProcessGroup -SrcGroupId $SrcGroupId -DstGroupId $DstGroupId
+
+# Sync from one folder to another
+Export-PpsEntry -RootPath 'Root/Private Folders/xxx/export' | Import-PpsEntry -RootPath 'Root/Private Folders/xxx/import'
+
+
+
+########## Pleasant Password Server to Pleasant Password Server sync ###########
+
+# Connect to first Pleasant Password Server
+Connect-Pps -Uri password1.company.tld -Session s1
+
+# Connect to second Pleasant Password Server
+Connect-Pps -Uri password2.company.tld -Session s2
+
+# Sync from first to second Pleasant Password Server
+Export-PpsEntry -Session s1 -RootPath 'Root/Private Folders/xxx/export' | Import-PpsEntry -Session s2 -RootPath 'Root/Private Folders/xxx/import'
+
+
+
+################### KeePass to Pleasant Password Server sync ###################
+
+# Install KeePassImportExport module
+Install-Module -Name KeePassImportExport -Scope CurrentUser
+
+# Connect to KeePass database
+$kdbx = Get-Item -Path C:\path\to\keepass\file.kdbx
+$masterKey = Get-Credential -Message MasterKey -UserName NOT_USED
+$db = $kdbx.BaseName
+if (-not (Get-KeePassDatabaseConfiguration -DatabaseProfileName $db))
+{
+    New-KeePassDatabaseConfiguration -DatabaseProfileName $db -DatabasePath $kdbx.FullName -UseMasterKey
+}
+
+# Connect to Pleasant Password Server
+Connect-Pps -Uri password.company.tld
+
+# Sync from KeePass to Pleasant Password Server
+Export-KeePassEntry -RootPath toplevel/export -DatabaseProfileName $db -MasterKey $masterKey | Import-PpsEntry -RootPath 'Root/Private Folders/xxx/import'
+
+
+
+################### Pleasant Password Server to KeePass sync ###################
+
+# Install KeePassImportExport module
+Install-Module -Name KeePassImportExport -Scope CurrentUser
+
+# Connect to KeePass database
+$kdbx = Get-Item -Path C:\path\to\keepass\file.kdbx
+$masterKey = Get-Credential -Message MasterKey -UserName NOT_USED
+$db = $kdbx.BaseName
+if (-not (Get-KeePassDatabaseConfiguration -DatabaseProfileName $db))
+{
+    New-KeePassDatabaseConfiguration -DatabaseProfileName $db -DatabasePath $kdbx.FullName -UseMasterKey
+}
+
+# Connect to Pleasant Password Server
+Connect-Pps -Uri password.company.tld
+
+# Sync from Pleasant Password Server to KeePass
+Export-PpsEntry -RootPath 'Root/Private Folders/xxx/import' | Import-KeePassEntry -RootPath toplevel/import -DatabaseProfileName $db -MasterKey $masterKey
 
 ```
 

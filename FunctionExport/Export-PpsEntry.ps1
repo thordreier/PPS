@@ -55,7 +55,7 @@ function Export-PpsEntry
                     Path     = $Path -join '/'
                     Name     = $_.Name
                     Username = $_.UserName
-                    Password = Get-PpsEntry -Id $_.Id -PasswordOnly
+                    Password = Get-PpsEntry @p -Id $_.Id -PasswordOnly
                     Url      = $_.Url
                     Notes    = $_.Notes
                 }
