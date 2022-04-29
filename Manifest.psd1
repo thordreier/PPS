@@ -4,7 +4,7 @@
 RootModule = 'PPS.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.5'
+ModuleVersion = '0.6'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
