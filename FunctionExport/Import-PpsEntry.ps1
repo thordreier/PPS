@@ -19,6 +19,9 @@ function Import-PpsEntry
         .PARAMETER CheckProperty
             xxx
 
+        .PARAMETER DryRun
+            xxx
+
         .PARAMETER Session
             Makes it possible to connect to multiple Pleasant Password Servers
 
@@ -48,6 +51,10 @@ function Import-PpsEntry
         [Parameter()]
         [string[]]
         $CheckProperty = @('Name', 'Username'),
+
+        [Parameter()]
+        [switch]
+        $DryRun,
 
         [Parameter()]
         [string]
@@ -108,7 +115,11 @@ function Import-PpsEntry
 
             if ($NoCheck)
             {
-                $null = New-PpsEntry @p -Path $fullPath @entryParams
+                "Creating $($InputObject.Path),  $($InputObject.Name)"
+                if (-not $DryRun)
+                {
+                    $null = New-PpsEntry @p -Path $fullPath @entryParams
+                }
             }
             else
             {
@@ -121,7 +132,10 @@ function Import-PpsEntry
                     if (Compare-Object -ReferenceObject $e -DifferenceObject $InputObject -Property $allProperties -CaseSensitive)
                     {
                         "Updating $key" | Write-Host
-                        $null = Get-PpsEntry @p -Id $e.Id | Set-PpsEntry @p @entryParams
+                        if (-not $DryRun)
+                        {
+                            $null = Get-PpsEntry @p -Id $e.Id | Set-PpsEntry @p @entryParams
+                        }
                     }
                     else
                     {
@@ -131,8 +145,10 @@ function Import-PpsEntry
                 else
                 {
                     "Creating $key" | Write-Host
-                    $null = New-PpsEntry @p -Path $fullPath @entryParams
-
+                    if (-not $DryRun)
+                    {
+                        $null = New-PpsEntry @p -Path $fullPath @entryParams
+                    }
                 }
             }
 

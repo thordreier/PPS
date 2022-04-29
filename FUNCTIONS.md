@@ -281,7 +281,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Import-PpsEntry [-RootPath] <String> [-InputObject] <PSObject> [-NoCheck] [[-CheckProperty] <String[]>] [[-Session] <String>] [<CommonParameters>]
+    Import-PpsEntry [-RootPath] <String> [-InputObject] <PSObject> [-NoCheck] [[-CheckProperty] <String[]>] [-DryRun] [[-Session] <String>] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -299,6 +299,9 @@ PARAMETERS
         xxx
         
     -CheckProperty <String[]>
+        xxx
+        
+    -DryRun [<SwitchParameter>]
         xxx
         
     -Session <String>
