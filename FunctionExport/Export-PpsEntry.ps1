@@ -57,7 +57,7 @@ function Export-PpsEntry
                     Username = $_.UserName
                     Password = Get-PpsEntry @p -Id $_.Id -PasswordOnly
                     Url      = $_.Url
-                    Notes    = $_.Notes
+                    Notes    = $_.Notes -replace "`r`n","`n"
                 }
                 if ($WithId) {$e | Add-Member -NotePropertyName Id -NotePropertyValue $_.Id}
                 $e
