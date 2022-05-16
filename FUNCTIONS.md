@@ -12,6 +12,7 @@ Text in this document is automatically created - don't change it manually
 [Invoke-PpsApiRequest](#Invoke-PpsApiRequest)<br>
 [New-PpsEntry](#New-PpsEntry)<br>
 [New-PpsGroup](#New-PpsGroup)<br>
+[Remove-PpsEntry](#Remove-PpsEntry)<br>
 [Set-PpsEntry](#Set-PpsEntry)<br>
 
 ## Functions
@@ -541,6 +542,54 @@ REMARKS
     To see the examples, type: "get-help New-PpsGroup -examples".
     For more information, type: "get-help New-PpsGroup -detailed".
     For technical information, type: "get-help New-PpsGroup -full".
+
+```
+
+<a name="Remove-PpsEntry"></a>
+### Remove-PpsEntry
+
+```
+NAME
+    Remove-PpsEntry
+    
+SYNOPSIS
+    Remove credential entry from Pleasant Password Server
+    
+    
+SYNTAX
+    Remove-PpsEntry [-Id] <Guid> [-Session <String>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    Remove credential entry from Pleasant Password Server
+    
+
+PARAMETERS
+    -Id <Guid>
+        ID of entry to get info about
+        
+    -Session <String>
+        Makes it possible to connect to multiple Pleasant Password Servers
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (https:/go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>Remove-PpsEntry -Id 5cbfabe7-70ee-4041-a1e0-263c9170f650
+    
+    
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "get-help Remove-PpsEntry -examples".
+    For more information, type: "get-help Remove-PpsEntry -detailed".
+    For technical information, type: "get-help Remove-PpsEntry -full".
 
 ```
 
