@@ -66,6 +66,11 @@ function Get-PpsEntry
         [switch]
         $PasswordOnly,
 
+        [Parameter(ParameterSetName='Id')]
+        [Parameter(ParameterSetName='Path')]
+        [switch]
+        $NoPassword,
+
         [Parameter()]
         [string]
         $Session = 'Default'
@@ -117,9 +122,12 @@ function Get-PpsEntry
                 throw 'Should never happen'
             }
 
-            foreach ($e in $entry)
+            if (-not $NoPassword)
             {
-                $e.Password = Invoke-PpsApiRequest @p -Uri "credential/$($e.Id)/password"
+                foreach ($e in $entry)
+                {
+                    $e.Password = Invoke-PpsApiRequest @p -Uri "credential/$($e.Id)/password"
+                }
             }
 
             # Return

@@ -72,18 +72,19 @@ function Import-PpsEntry
         }
 
         $allProperties = @('Name', 'Username', 'Password', 'Url', 'Notes')
+        $allowedCheckProperties = @('Name', 'Username', 'Url')
 
         if (-not $NoCheck)
         {
             # Some versions of PowerShell doesn't seem to trigger ValidateScript on an empty array. That's why it's located here
             if (-not $CheckProperty.Count) {throw 'CheckProperty should not be empty'}
-            $CheckProperty | ForEach-Object -Process {if ($_ -notin $allProperties) {throw "$_ is not allowed in CheckProperty, only $($allProperties -join ',') is allowed"}}
+            $CheckProperty | ForEach-Object -Process {if ($_ -notin $allowedCheckProperties) {throw "$_ is not allowed in CheckProperty, only $($allowedCheckProperties -join ',') is allowed"}}
             $CheckProperty = @('Path') + $CheckProperty
 
             try
             {
                 $ErrorActionPreference = 'Stop'
-                $existing = @(Export-PpsEntry @p -RootPath $RootPath -WithId)
+                $existing = @(Export-PpsEntry @p -RootPath $RootPath -WithId -NoPassword)
                 if (-not ($existingHash = $existing | Group-Object -Property $CheckProperty -AsHashTable -AsString))
                 {
                     $existingHash = @{}
@@ -105,6 +106,11 @@ function Import-PpsEntry
         {
             # Make sure that we don't continue on error, and that we catches the error
             $ErrorActionPreference = 'Stop'
+
+            if ($InputObject -is [hashtable])
+            {
+                $InputObject = [PSCustomObject] $InputObject
+            }
 
             $fullPath = if ($InputObject.Path) {$RootPath + '/' + $InputObject.Path} else {$RootPath}
 
@@ -128,6 +134,7 @@ function Import-PpsEntry
                 {
                     if ($e.Count -gt 1) {Write-Warning -Message "Found $($e.Count) objects matching ""$key"", just selecting first match"}
                     $e = $e[0]
+                    $e.Password = Get-PpsEntry @p -Id $e.Id -PasswordOnly
                     $e | Add-Member -NotePropertyName _PROCESSED_ -NotePropertyValue $true
                     if (Compare-Object -ReferenceObject $e -DifferenceObject $InputObject -Property $allProperties -CaseSensitive)
                     {

@@ -33,6 +33,10 @@ function Export-PpsEntry
         $WithId,
 
         [Parameter()]
+        [switch]
+        $NoPassword,
+
+        [Parameter()]
         [string]
         $Session = 'Default'
     )
@@ -55,10 +59,11 @@ function Export-PpsEntry
                     Path     = $Path -join '/'
                     Name     = $_.Name
                     Username = $_.UserName
-                    Password = Get-PpsEntry @p -Id $_.Id -PasswordOnly
+                    Password = ''
                     Url      = $_.Url
                     Notes    = $_.Notes -replace "`r`n","`n"
                 }
+                if (-not $NoPassword) {$e.Password = Get-PpsEntry @p -Id $_.Id -PasswordOnly}
                 if ($WithId) {$e | Add-Member -NotePropertyName Id -NotePropertyValue $_.Id}
                 $e
             }
