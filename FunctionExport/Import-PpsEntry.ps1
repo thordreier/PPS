@@ -57,6 +57,10 @@ function Import-PpsEntry
         $DryRun,
 
         [Parameter()]
+        [switch]
+        $Quiet,
+
+        [Parameter()]
         [string]
         $Session = 'Default'
     )
@@ -138,7 +142,7 @@ function Import-PpsEntry
                     $e | Add-Member -NotePropertyName _PROCESSED_ -NotePropertyValue $true
                     if (Compare-Object -ReferenceObject $e -DifferenceObject $InputObject -Property $allProperties -CaseSensitive)
                     {
-                        "Updating $key" | Write-Host
+                        "Updating $key" | InfoOut -Quiet:$Quiet
                         if (-not $DryRun)
                         {
                             $null = Get-PpsEntry @p -Id $e.Id | Set-PpsEntry @p @entryParams
@@ -146,12 +150,12 @@ function Import-PpsEntry
                     }
                     else
                     {
-                        "OK $key" | Write-Host
+                        "OK $key" | InfoOut -Quiet:$Quiet
                     }
                 }
                 else
                 {
-                    "Creating $key" | Write-Host
+                    "Creating $key" | InfoOut -Quiet:$Quiet
                     if (-not $DryRun)
                     {
                         $null = New-PpsEntry @p -Path $fullPath @entryParams
