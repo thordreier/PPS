@@ -38,7 +38,11 @@ function Export-PpsEntry
 
         [Parameter()]
         [string]
-        $Session = 'Default'
+        $Session = 'Default',
+
+        [Parameter()]
+        [scriptblock]
+        $FilterScript
     )
 
     begin
@@ -55,7 +59,8 @@ function Export-PpsEntry
         {
             $group = Get-PpsGroup @p -Id $GroupId
             $group.Credentials  | ForEach-Object -Process {
-                $e = [PSCustomObject] @{
+                [PSCustomObject] @{
+                    Id       = $_.Id
                     Path     = $Path -join '/'
                     Name     = $_.Name
                     Username = $_.UserName
@@ -63,13 +68,19 @@ function Export-PpsEntry
                     Url      = $_.Url
                     Notes    = $_.Notes -replace "`r`n","`n"
                 }
-                if (-not $NoPassword) {$e.Password = Get-PpsEntry @p -Id $_.Id -PasswordOnly}
-                if ($WithId) {$e | Add-Member -NotePropertyName Id -NotePropertyValue $_.Id}
-                $e
             }
             $group.Children | ForEach-Object -Process {
                 GetGrp -GroupId $_.Id -Path ($Path + $_.Name)
             }
+        }
+        if (-not $FilterScript)
+        {
+            $FilterScript = {$true}
+        }
+        $excludeProperty = @()
+        if (-not $WithId)
+        {
+            $excludeProperty += 'Id'
         }
     }
 
@@ -83,7 +94,10 @@ function Export-PpsEntry
             $ErrorActionPreference = 'Stop'
 
             $groupId = Get-PpsGroup @p -Path $RootPath -ReturnId
-            GetGrp -GroupId $groupId
+            GetGrp -GroupId $groupId | Where-Object -FilterScript $FilterScript | ForEach-Object -Process {
+                if (-not $NoPassword) {$_.Password = Get-PpsEntry @p -Id $_.Id -PasswordOnly}
+                $_
+            } | Select-Object -Property * -ExcludeProperty $excludeProperty
         }
         catch
         {
